@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<!--    <div class="container">
+        <h1 class="display-3">Привет, родной</h1>
+        <p><a class="btn btn-primary btn-lg" href="#" role="button">Читать больше &raquo;</a></p>
+    </div>-->
+<!--
+<div class="container">
+    <div class="row">
+        {% for task in tasks %}
+          
+        <div class="col-md-4">
+            <h2>{{ task.title }} {{ task.status_task }} </h2>
+            <p>{{ task.task }}</p>
+            <p>{{ task.author }}</p>
+                <p><a class="btn btn-secondary" href="{{ task.get_update_url }}" role="button">Подробнее &raquo;</a></p>
+            </div>
+        {% endfor %}
+            </div>
+
+    </div>-->
+
+    <div class="row">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Краткое описание задачи</th>
+                <th scope="col">Хост-нейм компьютера</th>
+                <th scope="col">Отдел работы</th>
+                <th scope="col">Описание задания</th>
+                <th scope="col">Имя сотрудника</th>
+                <th scope="col">Статус</th>
+                <th scope="col">Комментарий от исполнителя</th>
+              </tr>
+            </thead> 
+            <tbody>
+                {% for task in task_list %}
+                <tr>
+                    <th scope="row">{{task.id}}</th>
+                    <td>
+                        {{ task.title }}
+                    </td>
+                    <td>{{ task.host_name }}</td>
+                    <td>{{ task.dept }}</td>
+                    <td>{{ task.task }}</td>
+                    <td>{{ task.author }}</td>
+                    <td>{{ task.status_task }}</td>
+                    <td> {{ task.comment }} </td> 
+                    <th scope="col"><a class="btn btn-info" href="{% url 'task_contractor_update' pk=task.id %}">редактировать</a></th>
+                  </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+    </div>
+</div> <!-- /container -->
+{{ form }}
+{% endblock content %}

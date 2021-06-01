@@ -1,0 +1,257 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <title>{% block title %} Мой сайт {% endblock %}</title>
+  <link rel="icon" href="{% static "icon/favicon.ico" %}" type="image/x-icon">
+  <link rel="stylesheet" href="{% static 'static_files/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'static_files/css/up.css' %}">
+  <link rel="stylesheet" href="{% static 'static_files/css/news.css' %}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous"></link>
+  {% comment %} <link rel="stylesheet" href="https://bootswatch.com/5/darkly/bootstrap.css"> {% endcomment %}
+  <link rel="stylesheet" href="{% static 'static_files/css/dark_mode.css' %}">
+ </head>
+ <body>
+
+  {% block preloader %}
+
+  <div class="preloader">
+    <div class="preloader__row">
+      <div class="preloader__item"></div>
+      <div class="preloader__item"></div>
+    </div>
+  </div>
+
+  {% endblock preloader %}
+    {% comment %} {% block breadcrumps %}
+  
+  <nav aria-label="breadcrumb">
+  <ol class="breadcrumb bg-white" style="margin-bottom: 0rem!important;">
+    <li class="breadcrumb-item"><a href="#">Главная</a></li>
+    <li class="breadcrumb-item"><a href="">Библиотека</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Данные</li>
+  </ol>
+</nav>
+  
+  {% endblock breadcrumps %} {% endcomment %}
+  {% block navbar %}
+ <div 
+ class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm navbar-expand-lg sticky-top bg-white" 
+ style="padding-top: 0rem!important; padding-bottom: 0rem!important; ">
+  <h5 class="my-0 mr-md-auto font-weight-normal">Помощь в ФЦМН</h5>
+  <nav class="my-2 my-md-0 mr-md-3 navbar navbar-expand-lg navbar-light" style="margin-right: 0rem!important;">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      {% comment %} <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="darkMode">
+            <label class="form-check-label" for="darkMode">Темный режим</label>
+      </div> {% endcomment %}
+      <ul class="navbar-nav">
+        {% if request.user.is_superuser %}
+        <li class="nav-item active">
+        <a href="/import" class="btn btn-outline-success mr-2" >Панель управления заявками</a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" style="margin-right: 1rem!important;" href="#" id="navbarDarkDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
+            Пользовательские действия
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+            <li><a class="dropdown-item" href="/">Главная</a></li>
+            <li><a class="dropdown-item" href="/manual">Руководство</a></li>
+            <li><a class="dropdown-item" href="/articles">Новости</a></li>
+            <li><a class="dropdown-item" href="/task_show">Подать заявку</a></li>
+          </ul>
+        {% elif request.user.is_staff %}
+        <li class="nav-item active">
+        <a href="/import" class="btn btn-outline-success mr-2">Панель управления заявками</a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
+            Пользовательские действия
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+            <li><a class="dropdown-item" href="/">Главная</a></li>
+            <li><a class="dropdown-item" href="/manual">Руководство</a></li>
+            <li><a class="dropdown-item" href="/articles">Новости</a></li>
+            <li><a class="dropdown-item" href="/task_show">Подать заявку</a></li>
+          </ul>
+
+        {% elif user.is_authenticated %}
+        <li class="nav-item active">
+          <a class="nav-link active" href="/">Главная</a>
+        </li>
+        <li class="nav-item active">  
+          <a class="nav-link active" href="/manual">Руководство</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link active" href="/articles">Новости</a>
+        </li>  
+        <li class="nav-item active">  
+          <a class="nav-link active" href="/task_show">Подать заявку</a>
+        </li>
+        {% endif %}
+          {% comment %} <li class="nav-item active"> 
+          <a class="nav-link active" href="{% url 'profile_detail_url' %}">Личный кабинет</a>
+        </li> {% endcomment %}
+      </ul>
+      {% if user.is_authenticated %}
+  {% comment %} <a class="btn btn-outline-primary" href="{% url 'profile_detail_url' %}">{{user.username}}</a> {% endcomment %}
+  <a class="btn btn-outline-primary" href="{% url 'profile' %}">{{user.username}}</a>
+  <!-- <a class="btn btn-outline-primary" href="{% url 'logout' %}">Выход</a>  -->
+  {% else %}
+  <a class="btn btn-outline-primary" href="{% url 'login' %}">Вход</a> 
+  <div class="nav-link"></div>
+  <a><a class="btn btn-outline-primary" href="{% url 'register' %}">Регистрация</a> </a>  
+  {% endif %}
+    </div>
+  </nav>
+
+</div>
+{% endblock  %}
+{% block container %}
+<div class="container">
+{% endblock container %}
+{% block content %}{% endblock %}
+{% block tasks %}{% endblock %}
+</div>
+{% block footer %}
+<footer class="pt-4 my-md-5 pt-md-5 border-top container-fluid">
+<div class="container">
+    <div class="row">
+      <div class="col-12 col-md">
+        <small class="d-block mb-3 text-muted">&copy; Практика Версия 0.6.5 от 25.05.2021</small>
+      </div>
+      <div class="col-6 col-md">
+        <h5>Ссылки</h5>
+        <ul class="list-unstyled text-small">
+          <li><a class="text-muted" href="#">Официальный сайт</a></li>
+          <li><a class="text-muted" href="#">О нас</a></li>
+          <li><a class="text-muted" href="#">О разработчике</a></li>
+          <li><a class="text-muted" href="#">История версий</a></li>
+          <li><a class="text-muted" href="#">Скоро</a></li>
+          <li><a class="text-muted" href="#">Скоро</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md">
+        <h5>Руководство пользователя</h5>
+        <ul class="list-unstyled text-small">
+          <li><a class="text-muted" href="#">Как пользоваться веб приложением</a></li>
+          <li><a class="text-muted" href="#">Как подавать заявки</a></li>
+          <li><a class="text-muted" href="#">Как зарегистрироваться</a></li>
+          <li><a class="text-muted" href="#">Политика конфиденциальности</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md">
+        <h5>Частые вопросы</h5>
+        <ul class="list-unstyled text-small">
+          <li><a class="text-muted" href="#">1</a></li>
+          <li><a class="text-muted" href="#">2</a></li>
+          <li><a class="text-muted" href="#">3</a></li>
+          <li><a class="text-muted" href="#">4</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  </footer>
+{% endblock  %}
+
+
+<button class="up-button" type="button">
+    ↑
+    <span style="display:none">Наверх</span>
+</button>
+
+
+</body>
+{% block extrascript %}
+<script type="text/javascript" src="{% static 'static_files/js/javascript.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/locales/bootstrap-datepicker.fr.min.js"></script>
+{% comment %} <script defer type="text/javascript" src="{% static 'static_files/js/up.js' %}"></script> {% endcomment %}
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js"></script>
+  <!--<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.min.js"></script>-->
+<script>
+    // https://raw.githubusercontent.com/halfmoonui/halfmoon/master/js/halfmoon.js
+    let darkModeOn = false;
+      
+    const createStorage = (name, value) => {
+      localStorage.setItem(name, value);
+    }
+      
+    const readStorage = name => {
+      return localStorage.getItem(name);
+    }
+      
+    const deleteStorage = name => {
+      localStorage.removeItem(name);
+    }
+     
+    const toggleDarkMode = (e) => {
+      if (document.body.classList.contains("dark-mode")) {
+        document.body.classList.remove("dark-mode");
+        darkModeOn = false;
+        createStorage("my_preferredMode", "light-mode");
+      } else {
+        document.body.classList.add("dark-mode");
+        darkModeOn = true;
+        createStorage("my_preferredMode", "dark-mode");
+      }
+    }
+      
+    document.getElementById("darkMode").addEventListener("click", toggleDarkMode)
+      
+    document.addEventListener("DOMContentLoaded", () => {
+      if (readStorage("my_preferredMode")) {
+        if (readStorage("my_preferredMode") == "dark-mode") {
+          darkModeOn = true;
+        } else {
+          darkModeOn = false;
+        }
+      } else {
+        if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          darkModeOn = true;
+        } else {
+          if (document.body.classList.contains("dark-mode")) {
+            darkModeOn = true;
+          } else {
+            darkModeOn = false;
+          }
+        }
+      }
+
+      if (darkModeOn) {
+        if (!document.body.classList.contains("dark-mode")) {
+          document.body.classList.add("dark-mode");
+        }
+        document.getElementById("darkMode").checked = true
+      } else {
+        if (document.body.classList.contains("dark-mode")) {
+          document.body.classList.remove("dark-mode");
+        }
+      }
+    })
+</script>
+<script>
+let upButton = document.querySelector('.up-button');
+window.onscroll = function () {
+  if (window.pageYOffset > 200) {
+    upButton.classList.add('shown');
+  } else {
+    upButton.classList.remove('shown')
+  }
+
+};
+
+upButton.onclick = function () {
+  window.scrollTo(0, 0);
+};
+</script>
+{% endblock extrascript %}
+</html>

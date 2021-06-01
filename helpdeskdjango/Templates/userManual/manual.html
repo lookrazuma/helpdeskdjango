@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %} Руководство пользователя {% endblock %}
+{% block content %} 
+<h1>РУКОВОДСТВО ПОЛЬЗОВАТЕЛЯ</h1>
+{% for manual in manual_list %}
+        <h4> {{ manual.name }} </h4> <br>
+        <div class="text-center">
+         <img class="shadow p-3 mb-5 bg-white rounded img-fluid" display: inline-block src="{{ manual.img_main.url }}"> </img>
+        </div>
+        <a> {{ manual.description_main|safe }} </a> <br>
+        {{ manual.img_two }} <br>
+        <a> {{ manual.description_two|safe }} </a>
+        {{ manual.img_three }}
+        <a> {{ manual.description_three }} </a>
+        {{ manual.img_four }}
+        <a> {{ manual.description_four }} </a>
+        {{ manual.img_five }}
+        <a> {{ manual.description_five }} </a>
+        {{ manual.img_six }}
+        <a> {{ manual.description_six }} </a>
+        {{ manual.img_seven }}
+        <a> {{ manual.description_seven }} </a>
+        {{ manual.img_eight }}
+        <a> {{ manual.description_eight }} </a>
+        {{ manual.img_nine }}
+        <a> {{ manual.description_nine }} </a>
+{% endfor %}
+
+
+{% comment %} <h5>Данная информационная система предназначена для решения возникающих проблем у пользователя, таких, как: </h5>
+        <p>1. Поломка принтера</p>
+        <p>2. Замена картриджей</p>
+        <p>3. Неработающий компьютер</p>
+        <p>4. Нет доступа к интернету</p>
+        <p>5. Компьютер "поймал" вирусы </p>
+        <p>6. Любые другие проблемы, связанные с техникой </p>
+ <h4>Первым делом Вам необходимо зарегистрироваться</h4>
+<h5>1. В левом верхнем углу найдите кнопку "Регистрация"</h5>
+<br>
+<h5>2. Введите данные так, чтобы они соответствовали необходимым параметрам</h5>
+<br>
+<h5>3. Нажмите кнопку "Зарегистрироваться"</h5>
+<br><br><br>
+<h4>Теперь, для того, чтобы начать пользоваться ИС Вам необходимо войти в систему</h4>
+<br>
+<h5>1. В левом верхнем углу найдите кнопку "Вход"</h5>
+<br>
+<br>
+<h5>2. Введите логин и пароль, которые указывали при регистрации</h5>
+<br>
+<h5>3. Нажмите кнопку "Войти"</h5>
+<br><br><br>
+<h4>После авторизации в системе вы можете переходить во вкладку "Задачи"</h4>
+<br>
+<h5>1. Перед Вами поле "Задачи"</h5>
+<br>
+<h5>2. Внесите Вашу задачу в хелпеск, следуя инструкции, чтобы её как можно скорее решили.</h5>
+<br>
+<h5>3. Обратите внимание, что Ваша заявка зарегистрирована под вашим именем</h5>
+<br>
+<h5>4. Как только сотрудник отдела информатизации решит вашу проблему, на задаче появится статус "Выполнено"</h5>
+<br><br><br><br>
+<h3>В случае возникновения вопросов по работе программы можете по прежнему обращаться по почте</h3>
+<br><br><br> {% endcomment %}
+
+
+
+<h2>ПРОЙДИТЕ ОПРОС О КАЧЕСТВЕ ИНФОРМАЦИОННОЙ СИСТЕМЫ</h2>
+
+<iframe class="container" src="https://docs.google.com/forms/d/e/1FAIpQLSez_qrAFMNXjpYcljBMfPyhCQ7stby_Ng3Id3-dOBXYQqEJ4g/viewform?entry.879531967=+{{ request.user.email }}&embedded=true" height="1840" frameborder="0" style="border: 0px">Загрузка…</iframe>
+
+
+{% endblock %}

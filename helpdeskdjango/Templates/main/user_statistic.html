@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block container %}
+<div class="container-fluid">
+{% endblock container %}
+{% block content %}
+
+<div class="row">
+  <div class= "col-3">
+  <br>
+    <div class="list-group col-md-10 mx-auto">
+      <a type="button" href="profile" class="list-group-item list-group-item-action">
+        Личный кабинет
+      </a>
+      <a type="button" href="task_list" class="list-group-item list-group-item-action">Ваши заявки</a>
+      <button type="button" href="" class="list-group-item list-group-item-action active">Статистика заявок</button>
+      <button type="button" href="" class="list-group-item list-group-item-action" disabled>Сообщения</button>
+      <p></p>
+      <a type="button" href="{% url 'logout' %}" class="list-group-item list-group-item-action">Выйти из профиля</a>
+    </div>
+  </div>
+
+  <div class= "col-6">
+    <div class="text-center">
+      <h4>Количество заявок по исполнителям</h4>
+      <div>
+        <canvas id="user-statistic-chart" data-url="{% url 'user-statistic-chart' %}"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class= "col-3">
+  <h3>Количество заявок, поданых вами: {{ tasks|length}}</h3>
+  </div>
+</div>
+
+
+
+ <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
+<script>
+    function getRandomColor() {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+    }
+
+    
+    $(function () {
+      
+      var $userStatisticChart = $("#user-statistic-chart");
+      $.ajax({
+        url: $userStatisticChart.data("url"),
+        success: function (data) {
+
+          var ctx = $userStatisticChart[0].getContext("2d");
+
+          new Chart(ctx, {
+            type: 'pie',
+            data: {
+              labels: data.labels,
+              datasets: [{
+                label: 'Количество',
+                backgroundColor: [
+                  'red',
+                  'green',
+                  'blue',
+                  'orchid',
+                  'yellow',
+                  'cyan',
+                  'b'
+                ],
+                data: data.data
+              }]          
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: ''
+              }
+            }
+          });
+
+        }
+      });
+
+    });
+
+  </script>
+{% endblock content %}

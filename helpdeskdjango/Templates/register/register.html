@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+<form method="POST" action="{% url 'register' %}">
+    {% csrf_token %}
+    {{form}}
+    <input name="register" type="submit" value="Зарегистрироваться" </input>
+</form>
+<small>Уже есть аккаунт? <a href="{% url 'login' %}">Войти!</a></small><br>
+
+{% endblock %}
+

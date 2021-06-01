@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:helpdeskdjango}/db.sqlite3",
+            "name": "helpdesk"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Главная страница {% endblock %}
+
+
+{% block content %}
+{% block container %}
+<div class="container-fluid">
+{% endblock container %}      
+
+<img src="{% static 'image/main_image.jpg' %}" class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt="">
+
+
+
+
+
+
+
+</div>
+
+{% endblock %}

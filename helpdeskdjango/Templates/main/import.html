@@ -1,0 +1,392 @@
+{% extends 'base.html' %}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/css/ionicons.min.css">
+{% block title %} {{ title }} {% endblock %} 
+{% block content %}
+
+<h1 class="text-center">Резверните элементы для отображения информации</h1>
+<div class="row justify-content-center">
+  <div class="col-md-12 col-lg-12">
+    <div id="accordion" class="myaccordion w-100" aria-multiselectable="true">
+      <div class="card">
+        <div class="card-header p-0 " id="headingOne">
+          <h2 class="col-md-12 success">
+            <button href="#collapseOne" class="col-md-12 btn btn-link collapsed" data-parent="#accordion" data-toggle="collapse" aria-expanded="true" aria-controls="collapseOne">
+              <p class="mb-0">Статистика</p>
+              <i class="fa" aria-hidden="true"></i>
+            </button>
+          </h2>
+        </div>
+        <div class="collapse" id="collapseOne" role="tabpanel" aria-labelledby="headingOne">
+          <div class="card-body py-5 px-4">
+              <div class="text-center">
+              <h4>Количество заявок по исполнителям</h4>
+              <div>
+                <canvas id="contractor-task-count-chart" data-url="{% url 'contractor-task-count-chart' %}"></canvas>
+              </div>
+            </div>
+            <hr>
+            {% comment %} <div class="row"> {% endcomment %}
+              <div class="col text-center">
+                <h4>Ход выполнения</h4>
+                <div >
+                  <canvas id="status-task-count-chart" data-url="{% url 'status-task-count-chart' %}"></canvas>
+                </div>
+              </div>
+              <hr>
+                <div class="col text-center">
+                <h4>Количество заявок из отделов</h4>
+                <div >
+                  <canvas id="dept-task-count-chart" data-url="{% url 'dept-task-count-chart' %}"></canvas>
+                </div>
+              </div>
+            {% comment %} </div> {% endcomment %}
+            <hr>
+              <div class="text-center">
+              <h4>Количество заявок по сотрудникам</h4>
+              <div >
+                <canvas id="author-task-count-chart" data-url="{% url 'author-task-count-chart' %}"></canvas>
+              </div>
+            </div>
+            <hr>
+            <div class="text-center">
+              <h4>Количество заявок по месяцам</h4>
+              <div >
+                <canvas id="month-task-count-chart" data-url="{% url 'month-task-count-chart' %}"></canvas>
+              </div>
+            </div>
+            <hr>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header p-0" id="headingTwo" role="tab">
+        <h2 class="mb-0">
+          <button href="#collapseTwo" class="col-md-12 btn btn-link" data-parent="#accordion" data-toggle="collapse" aria-expanded="false" aria-controls="collapseTwo">
+          <p class="mb-0">Импорт заявок</p>
+          <i class="fa" aria-hidden="true"></i>
+          </button>
+        </h2>
+      </div>
+      <div class="collapse show" id="collapseTwo" role="tabpanel" aria-labelledby="headingTwo">
+        <div class="card-body py-5 px-4">
+            <h3 class="text-center">Импорт файлов</h3>
+            <h5>Правила импорта</h5>
+              <li>Необходимо <strong>строго</strong> соблюдать требования по загружаемым файлам:</li><br>
+              <ol><p>В качестве загружаемого файла можно использовать любой из представленных в выпадающем списке: <em>json, csv, xlsx</em>
+              <br><br>
+              <em>xlsx, csv и xls</em> <strong>должны иметь в себе следующие столбцы(атрибуты): </strong> <br>
+              <h6>id, create_date, title, author, host_name, contractor, dept, task, status_task, in_progress_time<h6>
+              </p></ol>
+              <ol><p>Снизу представлен пример заполнения таблицы</p></ol>
+
+              <table class="table table-bordered container">
+            <thead>
+              <tr>
+                <th scope="col"><small>Код (id)</small></th> 
+                <th scope="col"><small>Время создания (create_date)</small></th> 
+                <th scope="col"><small>Заголовок (title)</small></th> 
+                <th scope="col"><small>Заявитель (author)</small></th> 
+                <th scope="col"><small>Хост-нейм (host_name)</small></th> 
+                <th scope="col"><small>Исполнитель (contractor)</small></th> 
+                <th scope="col"><small>Отдел работы (dept)</small></th> 
+                <th scope="col"><small>Описание_заявки (task)</small></th> 
+                <th scope="col"><small>Статус заявки (status_task)</small></th> 
+                <th scope="col"><small>Время выполнения (in_progress_time)</small></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row"><small>1</small></th>
+                <td><small>26.07.2020 13:15</small></td>
+                <td><small>Не работает принтер</small></td>
+                <td><small>Данил Шаманов</small></td>
+                <td><small>А01-120-001</small></td>
+                <td><small>Сегрей Павлов</small></td>
+                <td><small>Бухгалтерия</small></td>
+                <td><small>Сломался принтер не пойму что случилось, будто зажевало бумагу</small></td>
+                <td><small>Заявка выполнена</small></td>
+                <td><small>26.07.2020 13:45</small></td>
+              </tr>
+            </tbody>
+          </table>
+
+            <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+                  <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Импорт</span>
+                </div>
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" name="importData" style='content: "Обзор"' id="inputGroupFile01">
+                  <label class="custom-file-label" for="inputGroupFile01">Выберите файл</label>
+                </div>
+              </div>
+              
+              <p>Выберите формат файла внизу:</p>
+              <select name="file-format" class="form-control my-3">
+                <option selected>Выберите формат...</option>
+                <option>CSV</option>
+                <option>JSON</option>
+                <option>XLS</option>
+              </select>
+              <button class="btn btn-primary" type="submit">Импортировать!</button>
+            </form>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header p-0" id="headingThree" role="tab">
+        <h2 class="mb-0">
+          <button href="#collapseThree" class="col-md-12 btn btn-link" data-parent="#accordion" data-toggle="collapse" aria-expanded="false" aria-controls="collapseThree">
+            <p class="mb-0">Экспорт заявок</p>
+            <i class="fa" aria-hidden="true"></i>
+          </button>
+        </h2>
+      </div>
+      <div class="collapse" id="collapseThree" role="tabpanel" aria-labelledby="headingTwo">
+        <div class="card-body py-5 px-4">
+          <ol>
+            <h3 class="text-center">Экспорт файлов</h3>
+            <a class="btn btn-primary col-md-8 offset-md-2" href="export">Экспорт!</a>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header p-0" id="headingFour" role="tab">
+        <h2 class="mb-0">
+          <button href="#collapseFour" class="col-md-12 btn btn-link" data-parent="#accordion" data-toggle="collapse" aria-expanded="false" aria-controls="collapseFour">
+            <p class="mb-0">Экспорт заявок 2</p>
+            <i class="fa" aria-hidden="true"></i>
+          </button>
+        </h2>
+      </div>
+        <div class="collapse" id="collapseFour" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="card-body py-5 px-4 px-md-5">
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+  <div>
+</div>
+
+ <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+  <script>
+
+    $(function () {
+
+      var $contractorTaskCountChart = $("#contractor-task-count-chart");
+      $.ajax({
+        url: $contractorTaskCountChart.data("url"),
+        success: function (data) {
+
+          var ctx = $contractorTaskCountChart[0].getContext("2d");
+
+          new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+              labels: data.labels,
+              datasets: [{
+                label: 'Количество',
+                backgroundColor: getRandomColor,
+                data: data.data
+              }]          
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: ''
+              }
+            }
+          });
+
+        }
+      });
+
+    });
+
+  </script>
+  <script>
+
+    $(function () {
+
+      var $statusTaskCountChart = $("#status-task-count-chart");
+      $.ajax({
+        url: $statusTaskCountChart.data("url"),
+        success: function (data) {
+
+          var ctx = $statusTaskCountChart[0].getContext("2d");
+
+          new Chart(ctx, {
+            type: 'pie',
+            data: {
+              labels: data.labels,
+              datasets: [{
+                label: 'Количество',
+                backgroundColor: getRandomColor,
+                //illColor: 
+                data: data.data
+              }]          
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: ''
+              },
+              labels: {
+                    fontColor: "blue",
+                    fontSize: 18
+                }
+            }
+          });
+
+        }
+      });
+
+    });
+    function getRandomColor() {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+    }
+  </script>
+    <script>
+
+    $(function () {
+
+      var $deptTaskCountChart = $("#dept-task-count-chart");
+      $.ajax({
+        url: $deptTaskCountChart.data("url"),
+        success: function (data) {
+
+          var ctx = $deptTaskCountChart[0].getContext("2d");
+
+          new Chart(ctx, {
+            type: 'polarArea',
+            data: {
+              labels: data.labels,
+              datasets: [{
+                label: 'Количество',
+                backgroundColor: getRandomColor,
+                data: data.data
+              }]          
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: ''
+              }
+            }
+          });
+
+        }
+      });
+
+    });
+
+  </script>
+
+      <script>
+
+    $(function () {
+
+      var $authorTaskCountChart = $("#author-task-count-chart");
+      $.ajax({
+        url: $authorTaskCountChart.data("url"),
+        success: function (data) {
+
+          var ctx = $authorTaskCountChart[0].getContext("2d");
+
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: data.labels,
+              datasets: [{
+                label: 'Количество',
+                backgroundColor: getRandomColor,
+                data: data.data
+              }]          
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: ''
+              }
+            }
+          });
+
+        }
+      });
+
+    });
+
+  </script>
+
+  <script>
+
+    $(function () {
+
+      var $monthTaskCountChart = $("#month-task-count-chart");
+      $.ajax({
+        url: $monthTaskCountChart.data("url"),
+        success: function (data) {
+
+          var ctx = $monthTaskCountChart[0].getContext("2d");
+
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: data.labels,
+              datasets: [{
+                label: 'Количество',
+                backgroundColor: getRandomColor,
+                data: data.data
+              }]          
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: ''
+              }
+            }
+          });
+
+        }
+      });
+
+    });
+
+  </script>
+{% endblock %}

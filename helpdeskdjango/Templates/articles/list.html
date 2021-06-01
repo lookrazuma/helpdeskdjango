@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}последние статьи{% endblock  %} 
+
+{% block content %}
+
+    <div class="row">
+    {% if latest_articles_list%}
+
+        {% for a in latest_articles_list  %}
+        <div class="col">
+            <div class="Masonry-item card">
+                <article class="NewsOnePreview">
+                    <a href="{% url 'detail' a.id %}">
+                        <div class="NewsOnePreview-img" style="background-image: url('{{ a.main_img.url }}')">
+                        </div>
+                        <div class="NewsOnePreview-date">
+                            {{ a.pub_date }}
+                        </div>
+                            <div class="NewsOnePreview-title">
+                                {{ a.article_title }} 
+                            </div> 
+                    </a>
+                        <div class="NewsOnePreview-text">
+                            <p>
+                                {{ a.article_text|truncatechars:100|safe }}
+                            </p>
+                        </div>
+            <div class="NewsOnePreview-hoverLine">
+            </div>
+            </article>
+            </div>
+        </div>
+        
+        
+        {% endfor %}
+    </div>
+        {% else %}
+            Статьи были не найдены(
+
+        {% endif %}
+
+{% endblock %}
+

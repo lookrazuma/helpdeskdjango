@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+    <!-- Example row of columns -->
+          <form method="post">
+        {% csrf_token %}
+        <div>
+            {{ form.title.label_tag }}
+            {{ form.title }}
+        </div>
+        <div>
+            {{ form.host_name.label_tag }}
+            {{ form.host_name }}
+        </div>
+        <div>
+            {{ form.dept.label_tag }}
+            {{ form.dept }}
+        </div>
+        <div>
+            {{ form.task.label_tag }}
+            {{ form.task }}
+        </div>
+        <div>
+            {{ form.author.label_tag }}
+            {{ form.author }}
+        </div>
+        <div>
+            {{ form.status_task.label_tag }}
+            {{ form.status_task }}
+        </div>
+        <div>
+            {{ form.comment.label_tag }}
+            {{ form.comment }}
+        </div>
+
+        <button type="submit" class="btn btn-success" >Добавить</button>
+
+        <!-- Выводим текст ошибки из переменной -->
+        <span> {{ error }} </span>
+    </form>
+         
+
+</div> <!-- /container -->
+
+{% endblock content %}

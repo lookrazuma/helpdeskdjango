@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}{{article.article_title}}{% endblock %} 
+
+{% block content %}
+<div >
+    <h2>{{article.article_title}}</h2>
+    <p>{{article.article_text}}</p>
+    <div class="col-sm-7"><img src="{{ article.image.url }}" class="img-responsive" style="width:100%" alt="Image"></div>
+    <em>{{article.pub_date}}</em>
+</div>
+
+{% if  was_published_recently%}
+НОВАЯ СТАТЬЯ
+{% endif %}
+<hr>
+{% if latest_comments_list %}
+    {% for c in  latest_comments_list %}
+    <div class="alert alert-success">
+        <p>
+        <h1 class="text-hide" style="background-image: url('https://arrowdental.co.ke/wp-content/uploads/2016/01/user-icon-1-50x50.png'); width: 50px; height: 50px;">Bootstrap</h1>
+            <strong>{{c.author_name}}</strong>
+            <p>{{c.comment_text}}</p>
+        </p>
+    </div>
+    {% endfor %}
+
+{% else %}
+Комментарии не найдены, станьте первым
+{% endif %}
+</hr>
+
+<form action="{% url 'articles:leave_comment' article.id %}" method="POST">
+
+    {% csrf_token %}
+    <p>Введите имя</p>
+    <input type="text" required placeholder = "Ваше имя" name = "name">
+    <p>Введите ваш отзыв</p>
+    <textarea name="text" required = "" placeholder = "Текст сообщения" cols="50" rows="10">
+    </textarea><br>
+
+    <button class="btn btn-success" type="submit">Оставить комментарий</button>
+
+</form>
+{% endblock %}

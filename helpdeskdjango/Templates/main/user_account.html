@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block container %}
+<div class="container-fluid">
+{% endblock container %}
+{% block content %}
+
+<div class="row">
+  <div class= "col-3">
+  <br>
+    <div class="list-group col-md-10 mx-auto">
+      <a type="button" href="profile" class="list-group-item list-group-item-action active">
+        Личный кабинет
+      </a>
+      <a type="button" href="task_list" class="list-group-item list-group-item-action">Ваши заявки</a>
+      <a type="button" href="statistics" class="list-group-item list-group-item-action">Статистика заявок</a>
+      <button type="button" href="" class="list-group-item list-group-item-action" disabled>Сообщения</button>
+      <p></p>
+      <a type="button" href="{% url 'logout' %}" class="list-group-item list-group-item-action">Выйти из профиля</a>
+    </div>
+  </div>
+
+    <div class="col-6">
+      <div class="row mt-5 justify-content-center">
+      {% if request.user.first_name %}
+        <h2>Здравствуйте, <strong>{{request.user.first_name}}</strong></h2>
+      {% else %}
+      <h2>Аккаунт пользователя <strong>{{request.user}}</strong></h2>
+      {% endif %}
+        <div class="col-12">
+          <form action="{% url 'profile' %}" method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+
+              {% if field.errors %}
+                <div class="alert alert-danger" role="alert">
+                  {{field.errors}}
+                </div>
+              {% endif %}
+            {% endfor %}
+            <div>
+              
+              
+                {% csrf_token %}
+                <div>
+                  {{ user_form.email.label_tag }}
+                  {{ user_form.email }}
+                </div>
+                <div class="row">
+                  <div class="col">
+                    {{ user_form.first_name.label_tag }}
+                    {{ user_form.first_name }}
+                  </div>
+                  <div class="col">
+                    {{ user_form.last_name.label_tag }}
+                    {{ user_form.last_name }}
+                  </div>
+                </div>
+                <div>
+                  {{ user_form.username.label_tag }}
+                  {{ user_form.username }}
+                </div>
+                {{ profile_form.as_p }}
+                {% comment %} <button class="btn btn-primary"type="submit">Сохранить изменения</button> {% endcomment %}
+              
+              {% comment %} < class="form-group">
+                  <div>{{ user.profile.host_name.label_tag }} </div>
+                  {{ user.profile.host_name }}
+              </>
+              <div class="form-group">
+                  {{ user.profile.dept.label_tag }} 
+                  {{ user.profile.dept }}
+              </div> {% endcomment %}
+            </div>
+
+            <div class="form-group row mt-2">
+              <label  class="col-sm-4 col-form-label">Права пользователя:</label>
+              <div class="col-sm-8">
+              <div readonly class="form-control text-center">
+                {% if request.user.is_superuser %} 
+                Администратор
+                {% elif request.user.is_staff %}
+                Сотрудник службы поддержки
+                {% else %}
+                Сотрудник организации
+                {% endif %}
+              </div>          
+              </div>
+            </div>
+            <hr>
+            <button class="btn btn-primary" type="submit">Сохранить</button>
+            {% comment %} <a class="btn btn-outline-primary" >Выход</a> {% endcomment %}
+            {% comment %} <a class="btn btn-primary" href="{% url 'password_change' %}" type="submit">Смена пароля</a> {% endcomment %}
+          </form>
+        </div> 
+        <hr>
+        {% comment %} {% include "main/tasks.html" %} {% endcomment %}
+      </div>
+    </div>
+    
+  <div class="col-3">
+    
+  </div>
+</div>
+  
+{% endblock content %}
