@@ -1,0 +1,47 @@
+<!--  -->
+<!-- Основа html документа взята из Templates/base.html -->
+{% extends 'base.html' %}
+
+{% block title %} {{ title }} {% endblock %}
+{% block content %} 
+    <div class="row">
+    <h1 class="col">Работа с задачами</h1>
+
+
+    <div class="col">
+    
+        <a class= "text-right" href="/task_list"><h5> Просмотреть список заявок <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+        </svg> </h5>
+        </a>
+    </div>
+    </div>
+    <br>
+    {% if messages %}
+    <ul class="messages alert alert-success">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+            {{ message }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
+    <form method="post">
+        {% csrf_token %}
+        <h5>Заголовок заявки: {{ form.title }} </h5> <br>
+        <h5>Хост-нейм: {{ form.host_name }}</h5> <br>
+        <h5>Отдел работы:{{ form.dept }}</h5> <br>
+        <h5>Описание задачи: {{ form.task }}</h5> <br>
+        <button type="submit" class="btn btn-success" >Добавить</button>
+
+        <!-- Выводим текст ошибки из переменной -->
+        <span> {{ error }} </span>
+    </form>
+{% endblock %}
+
+
+{% block tasks %}
+
+{% endblock %}

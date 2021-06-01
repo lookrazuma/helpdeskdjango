@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ title }} {% endblock %}
+{% block content %} 
+<h1 class="text-center">Редактирование заявки</h1>
+    <div class="">
+    
+    <form method="post">
+        {% csrf_token %}
+        <h5>Заголовок заявки: {{ form.title }} </h5> <br>
+        <h5>Хост-нейм: {{ form.host_name }}</h5> <br>
+        <h5>Отдел работы:{{ form.dept }}</h5> <br>
+        <h5>Описание задачи: {{ form.task }}</h5> <br>
+        <button type="submit" class="btn btn-success" >Сохранить изменение</button>
+
+        <!-- Выводим текст ошибки из переменной -->
+        <span> {{ error }} </span>
+    </form>
+
+{% endblock %}
+
+
+{% block tasks %}
+
+{% endblock %}

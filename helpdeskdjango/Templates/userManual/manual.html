@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %} Руководство пользователя {% endblock %}
+{% block content %} 
+<h1>РУКОВОДСТВО ПОЛЬЗОВАТЕЛЯ</h1>
+{% for manual in manual_list %}
+        <h4> {{ manual.name }} </h4> <br>
+        <div class="text-center">
+         <img class="shadow p-3 mb-5 bg-white rounded img-fluid" display: inline-block src="{{ manual.img_main.url }}"> </img>
+        </div>
+        <a> {{ manual.description_main|safe }} </a> <br>
+
+{% endfor %}
+
+
+
+
+<h2>ПРОЙДИТЕ ОПРОС О КАЧЕСТВЕ ИНФОРМАЦИОННОЙ СИСТЕМЫ</h2>
+
+<iframe class="container" src="https://docs.google.com/forms/d/e/1FAIpQLSez_qrAFMNXjpYcljBMfPyhCQ7stby_Ng3Id3-dOBXYQqEJ4g/viewform?entry.879531967=+{{ request.user.email }}&embedded=true" height="1840" frameborder="0" style="border: 0px">Загрузка…</iframe>
+
+
+{% endblock %}
