@@ -6,8 +6,10 @@
 {% for manual in manual_list %}
         <h4> {{ manual.name }} </h4> <br>
         <div class="text-center">
+        {% if manual.img_main %}
          <img class="shadow p-3 mb-5 bg-white rounded img-fluid" display: inline-block src="{{ manual.img_main.url }}"> </img>
         </div>
+        {% endif %}
         <a> {{ manual.description_main|safe }} </a> <br>
 
 {% endfor %}

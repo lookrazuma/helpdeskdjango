@@ -8,7 +8,6 @@ from django import forms
 # admin.site.register(userManual)
 class userManualAdminForm(forms.ModelForm):
     description_main = forms.CharField(label='dfgs', widget=CKEditorWidget())
-    description_two = forms.CharField(label='Описание №2', widget=CKEditorWidget())
     
     
     
@@ -21,17 +20,6 @@ class userManualAdmin(ImportExportModelAdmin):
     pass
 
 
-    list_display = ('date_publiched', 'name', 'img_main', 'relevancy',)
-    list_editable = ('relevancy',)
-    list_display_links = ('name', 'date_publiched')
-    list_filter = ('name', 'date_publiched',)
-    save_as = True
-    actions_on_top = True
     form = userManualAdminForm
-    # actions = [make_new, make_read, make_in_progress, make_completed, make_rejection]
-    fieldsets = (
-        ('Основная информация', {
-            'fields': ('name','img_main','description_main','relevancy',)
-        }),
-    )
+
     # readonly_fields= ('author',)
