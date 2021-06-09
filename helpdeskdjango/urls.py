@@ -7,7 +7,6 @@ from rest_framework.routers import SimpleRouter # импортирую роут�
 from main.views import TaskViewSet # Импорт модели задачи
 from django.conf import settings
 from django.conf.urls.static import static
-import debug_toolbar
 router = SimpleRouter() # Объявляю роутер
 
 router.register(r'task', TaskViewSet) #регистрирую его
@@ -25,9 +24,7 @@ urlpatterns = [
     path('manual/', include('userManual.urls')),
 
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    # path("account/", include("UserProfile.urls")), 
     path('ckeditor/', include('ckeditor_uploader.urls')),
-    path('__debug__/', include(debug_toolbar.urls)),   
 ]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
     
@@ -35,12 +32,5 @@ urlpatterns = [
 urlpatterns +=router.urls
 
 if settings.DEBUG:
-    # import debug_toolbar
 
-    # import mimetypes
-    # mimetypes.add_type("application/javascript", ".js", True)
-
-    # urlpatterns = [
-    #     path('__debug__/', include(debug_toolbar.urls)),
-    # ] + urlpatterns
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
